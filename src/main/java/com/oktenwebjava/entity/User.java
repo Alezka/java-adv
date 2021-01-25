@@ -1,6 +1,7 @@
 package com.oktenwebjava.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.oktenwebjava.Validation.UniqueUserName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     //    @Column(name = "user_name")
+//    @UniqueUserName
     @NotBlank
     private String name;
     @Positive

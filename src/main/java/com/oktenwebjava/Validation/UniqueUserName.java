@@ -10,14 +10,14 @@ import java.lang.annotation.Target;
 @Constraint(
         validatedBy = {UniqueUserNameValidator.class}
 )
-@Target({ ElementType.FIELD})
+@Target({ElementType.FIELD})
 @Retention(value = RetentionPolicy.RUNTIME)
 
 
 public @interface UniqueUserName {
-            String messege() default "Name should be unique";
+    String message() default  "Name should be unique ";
 
-            Class <?> groups();
+    Class<?>[] groups() default {};
 
-            Class<? extends Payload> payload();
+    Class<? extends Payload>[] payload() default {};
 }
