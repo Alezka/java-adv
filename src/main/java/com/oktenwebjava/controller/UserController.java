@@ -1,5 +1,6 @@
 package com.oktenwebjava.controller;
 
+import com.oktenwebjava.dto.UserCreateDto;
 import com.oktenwebjava.entity.User;
 import com.oktenwebjava.service.IUserServise;
 import lombok.extern.slf4j.Slf4j;
@@ -26,21 +27,22 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public User createUser(@RequestBody @Valid User user) {
+    public User createUser(@RequestBody @Valid UserCreateDto user) {
         log.info("Handled POST request with body: {}", user);
         return userServise.saveUser(user);
     }
 
-    @GetMapping("/user")
+    @GetMapping("/{id}")
     public User getById(@PathVariable int id) {
-        return userServise.getUserById(id);
+        final User userById = userServise.getUserById(id);
+        userById.getProfession().getId();
+        return userById;
     }
 
     @PutMapping("/{id}")
-    public User updateById(@RequestBody User newUser, @PathVariable("id") int id) throws IllegalAccessException {
+    public User updateById( @RequestBody User newUser, @PathVariable("id") int id) throws IllegalAccessException {
         return userServise.updateUser(id, newUser);
     }
-
     //    @DeleteMapping("/{id}")
 //    public List<User> deleteById(@PathVariable("id") int id) {
 //        Iterator<User> iterator = users.iterator();

@@ -1,11 +1,12 @@
 package com.oktenwebjava.service;
 
+import com.oktenwebjava.dto.UserCreateDto;
 import com.oktenwebjava.entity.User;
 
 import java.util.List;
 
 public interface IUserServise {
-    User saveUser(User user);
+    User saveUser(UserCreateDto user);
 
     List<User> getallUsers();
 

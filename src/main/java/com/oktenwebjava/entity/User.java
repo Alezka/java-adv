@@ -1,7 +1,7 @@
 package com.oktenwebjava.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.oktenwebjava.Validation.UniqueUserName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +27,13 @@ public class User {
     @Column(length = 3)
     private int age;
     private boolean status;
+
+    @ManyToOne(targetEntity = Profession.class,fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Profession profession;
+
+//    @ManyToOne(targetEntity = Profession.class)
+//    private Profession professionRewardet;
 
 }
 
