@@ -1,6 +1,7 @@
 package com.oktenwebjava.controller;
 
 import com.oktenwebjava.dto.UserCreateDto;
+import com.oktenwebjava.dto.UserDto;
 import com.oktenwebjava.entity.User;
 import com.oktenwebjava.service.IUserServise;
 import lombok.extern.slf4j.Slf4j;
@@ -21,22 +22,20 @@ public class UserController {
 //private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping
-    public List<User> getAllUsers() {
+    public List<UserDto> getAllUsers() {
         return userServise.getallUsers();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public User createUser(@RequestBody @Valid UserCreateDto user) {
+    public UserDto createUser(@RequestBody @Valid UserCreateDto user) {
         log.info("Handled POST request with body: {}", user);
         return userServise.saveUser(user);
     }
 
     @GetMapping("/{id}")
-    public User getById(@PathVariable int id) {
-        final User userById = userServise.getUserById(id);
-        userById.getProfession().getId();
-        return userById;
+    public UserDto getById(@PathVariable int id) {
+       return userServise.getUserById(id);
     }
 
     @PutMapping("/{id}")

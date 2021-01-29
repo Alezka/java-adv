@@ -28,7 +28,7 @@ public class User {
     private int age;
     private boolean status;
 
-    @ManyToOne(targetEntity = Profession.class,fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Profession.class,fetch = FetchType.EAGER)
     @JsonIgnore
     private Profession profession;
 
