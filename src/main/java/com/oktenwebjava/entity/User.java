@@ -28,11 +28,21 @@ public class User {
     private int age;
     private boolean status;
 
-    @ManyToOne(targetEntity = Profession.class,fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Profession.class,fetch = FetchType.LAZY)
     @JsonIgnore
     private Profession profession;
 
-//    @ManyToOne(targetEntity = Profession.class)
+    @Override
+    public String   toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", status=" + status +
+                '}';
+    }
+
+    //    @ManyToOne(targetEntity = Profession.class)
 //    private Profession professionRewardet;
 
 }

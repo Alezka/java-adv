@@ -2,10 +2,14 @@ package com.oktenwebjava.controller;
 
 import com.oktenwebjava.dto.UserCreateDto;
 import com.oktenwebjava.dto.UserDto;
+import com.oktenwebjava.dto.UserPageDto;
+import com.oktenwebjava.dto.UserProfessionDto;
 import com.oktenwebjava.entity.User;
 import com.oktenwebjava.service.IUserServise;
+import com.oktenwebjava.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +26,13 @@ public class UserController {
 //private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping
-    public List<UserDto> getAllUsers() {
-        return userServise.getallUsers();
+    public UserPageDto getAllUsers(@RequestParam(defaultValue = "0")int page, @RequestParam(defaultValue = "3") int size ) {
+        return userServise.getallUsers(PageRequest.of(page,size));
+    }
+
+    @GetMapping("/profession/{title}")
+    public UserProfessionDto getUSersByProfessionTitle(@PathVariable String title){
+        return userServise.getUserProfessionDto(title);
     }
 
     @PostMapping

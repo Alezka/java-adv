@@ -2,18 +2,19 @@ package com.oktenwebjava.service;
 
 import com.oktenwebjava.dao.ProfessionRepository;
 import com.oktenwebjava.dao.UserRepository;
-import com.oktenwebjava.dto.BadRequestExeption;
-import com.oktenwebjava.dto.UserCreateDto;
-import com.oktenwebjava.dto.UserDto;
+import com.oktenwebjava.dto.*;
 import com.oktenwebjava.entity.Profession;
 import com.oktenwebjava.entity.User;
 import org.apache.commons.lang3.CharUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,6 +27,8 @@ public class UserService implements IUserServise {
     }
 
     private ProfessionRepository professionRepository;
+
+
 
 //    @Autowired
 //    public UserService(UserRepository userRepository) {
@@ -50,10 +53,12 @@ public class UserService implements IUserServise {
     }
 
     @Override
-    public List<UserDto> getallUsers() {
-        return userRepository.findAll().stream().map(user ->
-             new UserDto(user.getId(),user.getName(),user.getAge(),user.getProfession().getTitle())
+    public UserPageDto getallUsers(PageRequest pageRequest) {
+        final Page<User> userPage = userRepository.findAll(pageRequest);
+        final List<UserDto> users = userPage.stream().map(user ->
+                new UserDto(user.getId(), user.getName(), user.getAge(), user.getProfession().getTitle())
         ).collect(Collectors.toList());
+        return new UserPageDto(users,userPage.getTotalPages());
     }
 
     @Override
@@ -76,6 +81,19 @@ public class UserService implements IUserServise {
             throw new IllegalAccessException("No user is such id" + id);
         }
     }
+
+    @Override
+    public UserProfessionDto getUserProfessionDto(String title) {
+        final Profession profession = professionRepository.findUsersByProfessionTitle(title);
+        final String professionTitle = profession.getTitle();
+        final  int  professionId= profession.getId();
+        final List  <User> users = profession.getUsers();
+        final List<UserDto> userDtos = users.stream()
+                .map(user -> new UserDto(user.getId(), user.getName(), user.getAge(), professionTitle))
+                .collect(Collectors.toList());
+        return new UserProfessionDto(professionId,userDtos);
+    }
+
     private UserDto convertToUserDto(User user){
         return new UserDto(user.getId(),user.getName(),user.getAge(),user.getProfession().getTitle());
     }

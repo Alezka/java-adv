@@ -9,8 +9,7 @@ import org.hibernate.annotations.ManyToAny;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,7 +26,16 @@ public class Profession {
 //
 
     @OneToMany(mappedBy = "profession",fetch = FetchType.LAZY)
-    private Set<User> users = new HashSet<>();
+    private List<User> users = new LinkedList<>();
+
+    @Override
+    public String toString() {
+        return "Profession{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", dateOfGraduation=" + dateOfGraduation +
+                '}';
+    }
 
 //    @OneToMany(mappedBy = "professionRewardet")
 //    private Set<User> awardUsers = new HashSet<>();
