@@ -14,20 +14,19 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class UserService implements IUserServise {
     private UserRepository userRepository;
-@Autowired
+
+    @Autowired
     public UserService(UserRepository userRepository, ProfessionRepository professionRepository) {
         this.userRepository = userRepository;
         this.professionRepository = professionRepository;
     }
 
     private ProfessionRepository professionRepository;
-
 
 
 //    @Autowired
@@ -58,7 +57,7 @@ public class UserService implements IUserServise {
         final List<UserDto> users = userPage.stream().map(user ->
                 new UserDto(user.getId(), user.getName(), user.getAge(), user.getProfession().getTitle())
         ).collect(Collectors.toList());
-        return new UserPageDto(users,userPage.getTotalPages());
+        return new UserPageDto(users, userPage.getTotalPages());
     }
 
     @Override
@@ -83,18 +82,19 @@ public class UserService implements IUserServise {
     }
 
     @Override
-    public UserProfessionDto getUserProfessionDto(String title) {
+    public UserProfessionDto getUSersByProfessionTitle(String title) {
         final Profession profession = professionRepository.findUsersByProfessionTitle(title);
         final String professionTitle = profession.getTitle();
-        final  int  professionId= profession.getId();
-        final List  <User> users = profession.getUsers();
+        final int professionId = profession.getId();
+        final List<User> users = profession.getUsers();
         final List<UserDto> userDtos = users.stream()
                 .map(user -> new UserDto(user.getId(), user.getName(), user.getAge(), professionTitle))
                 .collect(Collectors.toList());
-        return new UserProfessionDto(professionId,userDtos);
+        return new UserProfessionDto(professionId, userDtos);
     }
 
-    private UserDto convertToUserDto(User user){
-        return new UserDto(user.getId(),user.getName(),user.getAge(),user.getProfession().getTitle());
+
+    private UserDto convertToUserDto(User user) {
+        return new UserDto(user.getId(), user.getName(), user.getAge(), user.getProfession().getTitle());
     }
 }

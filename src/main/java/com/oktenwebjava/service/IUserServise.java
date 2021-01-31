@@ -18,5 +18,5 @@ public interface IUserServise {
 
     User updateUser(int id, User user) throws IllegalAccessException;
 
-    UserProfessionDto getUserProfessionDto(String title);
+    UserProfessionDto getUSersByProfessionTitle(String title);
 }
