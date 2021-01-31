@@ -32,7 +32,7 @@ public class UserController {
 
     @GetMapping("/profession/{title}")
     public UserProfessionDto getUSersByProfessionTitle(@PathVariable String title){
-        return userServise.getUserProfessionDto(title);
+        return userServise.getUSersByProfessionTitle(title);
     }
 
     @PostMapping

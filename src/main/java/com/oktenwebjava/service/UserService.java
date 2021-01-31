@@ -83,7 +83,7 @@ public class UserService implements IUserServise {
     }
 
     @Override
-    public UserProfessionDto getUserProfessionDto(String title) {
+    public UserProfessionDto getUSersByProfessionTitle(String title) {
         final Profession profession = professionRepository.findUsersByProfessionTitle(title);
         final String professionTitle = profession.getTitle();
         final  int  professionId= profession.getId();
